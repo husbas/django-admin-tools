@@ -1,0 +1,114 @@
+from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+from admin_tools.dashboard.models import *
+
+# create your custom modules here if you want, for example:
+#
+# class CustomDashboardModule(DashboardModule):
+#     pass
+#
+
+
+# to activate your index dashboard you must add the following to your 
+# project's settings.py file:
+#
+# ADMIN_TOOLS_INDEX_DASHBOARD = '{{ project }}.{{ file }}.CustomIndexDashboard'
+class CustomIndexDashboard(Dashboard):
+    """
+    Document your custom dashboard.
+    """ 
+    def render(self, request):
+        # append a link list module for "quick links"
+        self.append(LinkListDashboardModule(
+            title=_('Quick links'),
+            layout='inline',
+            draggable=False,
+            deletable=False,
+            collapsible=False,
+            entries=[
+                {
+                    'title': _('Return to site'),
+                    'url': '/',
+                },
+                {
+                    'title': _('Change password'),
+                    'url': reverse('admin:password_change'),
+                },
+                {
+                    'title': _('Log out'),
+                    'url': reverse('admin:logout')
+                },
+            ]
+        ))
+
+        # append an app list module for "Applications"
+        self.append(AppListDashboardModule(
+            title=_('Applications'),
+            exclude_list=('django.contrib',),
+        ))
+
+        # append an app list module for "Administration"
+        self.append(AppListDashboardModule(
+            title=_('Administration'),
+            include_list=('django.contrib',),
+        ))
+
+        # append a recent actions module
+        self.append(RecentActionsDashboardModule(
+            title=_('Recent Actions'),
+            limit=5
+        ))
+
+        # append a feed module
+        self.append(FeedDashboardModule(
+            title=_('Latest Django News'),
+            feed_url='http://www.djangoproject.com/rss/weblog/',
+            limit=5
+        ))
+
+        # append another link list module for "support". 
+        self.append(LinkListDashboardModule(
+            title=_('Support'),
+            entries=[
+                {
+                    'title': _('Django documentation'),
+                    'url': 'http://docs.djangoproject.com/',
+                    'external': True,
+                },
+                {
+                    'title': _('Django "django-users" mailing list'),
+                    'url': 'http://groups.google.com/group/django-users',
+                    'external': True,
+                },
+                {
+                    'title': _('Django irc channel'),
+                    'url': 'irc://irc.freenode.net/django',
+                    'external': True,
+                },
+            ]
+        ))
+
+
+# to activate your app index dashboard you must add the following to your 
+# project's settings.py file:
+#
+# ADMIN_TOOLS_APP_INDEX_DASHBOARD = '{{ project }}.{{ file }}.CustomAppIndexDashboard'
+class CustomAppIndexDashboard(AppIndexDashboard):
+    """
+    Document your custom app index dashboard.
+    """ 
+    def render(self, request):
+        # we disable title because its redundant with the model list module
+        self.title = ''
+
+        # append a model list module
+        self.append(ModelListDashboardModule(
+            title=self.app_title,
+            include_list=self.models,
+        ))
+
+        # append a recent actions module
+        self.append(RecentActionsDashboardModule(
+            title=_('Recent Actions'),
+            include_list=self.get_app_content_types(),
+        ))

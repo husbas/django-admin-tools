@@ -1,0 +1,32 @@
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+from admin_tools.menu.models import *
+
+# create your custom menu items here if you want:
+#
+# class CustomMenuItem(MenuItem):
+#     pass
+#
+
+
+# to activate your custom menu you must add the following to your 
+# project's settings.py file:
+#
+# ADMIN_TOOLS_MENU = '{{ project }}.{{ file }}.CustomMenu'
+class CustomMenu(Menu):
+    """
+    Returns the admin menu defined by the user or the default one.
+    """
+    def render(self, request):
+        self.append(MenuItem(
+            title=_('Dashboard'),
+            url=reverse('admin:index')
+        ))
+        self.append(AppListMenuItem(
+            title=_('Applications'),
+            exclude_list=('django.contrib',),
+        ))
+        self.append(AppListMenuItem(
+            title=_('Administration'),
+            include_list=('django.contrib',),
+        ))
