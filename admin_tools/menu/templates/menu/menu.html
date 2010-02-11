@@ -1,0 +1,19 @@
+{% load admin_tools_menu_tags %}
+{% if menu.children %}
+<!--[if IE 6]>
+<script type="text/javascript">
+var hover_ie6 = function() {
+    var children = document.getElementById('navigation-menu').getElementsByTagName('li');
+    for (i=0; i<children.length; i++) {
+        children[i].onmouseover = function() { this.className += ' over'; };
+        children[i].onmouseout = function() { this.className = this.className.replace(new RegExp(' over\\b'), ''); };
+    }
+}
+window.onload = hover_ie6;
+</script>
+<![endif]-->
+
+<ul id="navigation-menu">
+    {% for item in menu.children %}{% admin_tools_render_menu_item item forloop.counter %}{% endfor %}
+</ul>
+{% endif %}
