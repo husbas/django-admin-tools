@@ -1,0 +1,30 @@
+============================
+django-admin-tools changelog
+============================
+
+Version 0.1.2, 13 February 2010:
+--------------------------------
+
+* fixed documentation issues;
+* added locales;
+* fixed issue #9: don't fail when feedparser is not installed;
+* fixed issue #5: implemented dashboard layout persistence in cookies;
+* enable all modules by default in the default dashboard;
+* fixed recent actions log entry urls when displayed in app_index;
+* added a "bookmarks" menu item and the code to manage bookmarks;
+* fixed jquery issues with django 1.2.
+
+Version 0.1.1, 10 February 2010:
+--------------------------------
+
+* fixed issue #2: template tag libraries have generic names;
+* changed the way dashboards are selected, don't rely on request variables but 
+  pass an extra argument to the template tag instead (fixes issue #3);
+* fixed MANIFEST.in (fixes issue #1);
+* better setup.py file.
+
+
+Version 0.1.0, 10 February 2010:
+--------------------------------
+
+* Initial release
