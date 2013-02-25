@@ -1,13 +1,17 @@
 """
 This module contains the base classes for menu and menu items.
 """
+from django.conf import settings
 from django.db import models
+
+user_model = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
 
 class Bookmark(models.Model):
     """
     This model represents a user created bookmark.
     """
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey(user_model)
     url = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
