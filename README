@@ -2,6 +2,8 @@
 django-admin-tools
 ==================
 
+***Imported from https://bitbucket.org/izi/django-admin-tools/ *** 
+
 django-admin-tools is a collection of extensions/tools for the default django 
 administration interface, it includes:
 
